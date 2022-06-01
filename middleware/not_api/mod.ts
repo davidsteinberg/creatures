@@ -29,7 +29,7 @@ const creatures = await response.json();
 for (const { name, description } of creatures) {
   console.log(\`\${name} - \${description}\`);
 }</code></pre>
-        <p>For more information, see the <a href="https://github.com/davidsteinberg/creaturor">project on GitHub</a>.</p>
+        <p>For more information, see the <a href="https://github.com/davidsteinberg/creaturator">project on GitHub</a>.</p>
       </body>
     </html>
   `;
