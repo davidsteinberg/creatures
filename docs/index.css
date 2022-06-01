@@ -1,0 +1,52 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  max-width: 600px;
+  margin: auto;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#name, #description {
+  margin: 20px;
+}
+
+#description {
+  margin-top: 10px;
+}
+
+#buttons {
+  float: right;
+  margin-top: 15px;
+  margin-right: 20px;
+}
+
+button {
+  background-color: inherit;
+  color: inherit;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: 5px;
+}
+
+button:not(button.disabled) {
+  cursor: pointer;
+}
+
+button:not(button.disabled):hover {
+  border: 1px solid darkgray;
+}
+
+button:active, button.disabled {
+  opacity: 0.5;
+}
