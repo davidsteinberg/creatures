@@ -1,8 +1,7 @@
 import { Middleware, Status } from "../../deps.ts";
 
 const body = (url: URL) => {
-  const { protocol, host } = url;
-  const urlPrefix = `${protocol}${host}/api/v1/`;
+  const urlPrefix = `${url.origin}/api/v1/`;
 
   return `
     <!DOCTYPE html>
