@@ -28,7 +28,7 @@ for (const { name, description } of creatures) {
 The server accepts a command-line argument to use as the base URL for fetching
 data:
 
-`deno --allow-net server.ts --data=http://localhost:8000`
+`deno run --allow-net server.ts --data=http://localhost:8000`
 
 It is expected that the following newline-delimited text files can be fetched
 from the data URL:
