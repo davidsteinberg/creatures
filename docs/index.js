@@ -1,79 +1,73 @@
 // UI
 const select = (selector) => document.querySelector(selector);
 const ui = {
+  about: select("#about"),
+  content: select("#content"),
   name: select("#name"),
   description: select("#description"),
-  generate: select("#generate"),
-  share: select("#share"),
+  previous: select("#previous"),
+  next: select("#next"),
+  toggle: select("#toggle"),
 };
 
-// Generate
-let currentCreature = null;
-const cachedCreatures = [];
+// Navigation
+const history = {
+  entries: [],
+  index: -1,
+};
 
-ui.generate.addEventListener("click", async () => {
-  if (cachedCreatures.length === 0) {
-    console.log("Fetching creatures");
-    const response = await fetch("https://creaturator.deno.dev/api/v1/50");
-    const creatures = await response.json();
-    cachedCreatures.push(...creatures);
-    ui.share.classList.remove("disabled");
-  }
-
-  currentCreature = cachedCreatures.shift();
-  const { name, description } = currentCreature;
-
+const showCurrentEntry = () => {
+  const {name, description} = history.entries[history.index];
   ui.name.textContent = name;
   ui.description.textContent = description;
-});
+};
 
-// Share
-if (!navigator.canShare({ text: "test" })) {
-  ui.share.textContent = "Copy";
-}
-
-ui.share.addEventListener("click", async () => {
-  if (currentCreature === null) {
-    console.error("There is nothing to share");
+ui.previous.onpointerup = () => {
+  if (history.index === 0) {
+    // Can't go back further
     return;
   }
 
-  const { navigator } = window;
-  const { name, description } = currentCreature;
-  const text = `${name}: ${description}`;
-  const data = { text };
+  history.index -= 1;
 
-  try {
-    if (navigator.canShare(data)) {
-      await navigator.share(data);
-    } else {
-      await navigator.clipboard.writeText(text);
-      alert("Copied to clipboard");
-    }
-  } catch (error) {
-    console.error(error);
+  // Disable button when we've reached the beginning
+  if (history.index === 0) {
+    ui.previous.classList.add("disabled");
   }
-});
 
-// Light/dark mode
-const lightMode = window.matchMedia("(prefers-color-scheme: light)");
-const handleLightModeChange = () => {
-  const themeElement = select('meta[name="theme-color"]');
-  const { classList } = document.body;
-
-  if (lightMode.matches) {
-    themeElement.setAttribute("content", "white");
-    classList.add("light-mode");
-  } else {
-    themeElement.setAttribute("content", "black");
-    classList.remove("light-mode");
-  }
+  showCurrentEntry();
 };
 
-if (lightMode.addEventListener === undefined) {
-  lightMode.addListener(handleLightModeChange);
-} else {
-  lightMode.addEventListener("change", handleLightModeChange);
-}
+let fetching = false;
+ui.next.onpointerup = async () => {
+  // Don't do anything while fetching
+  if (fetching) {
+    return;
+  }
 
-handleLightModeChange();
+  if (history.index === history.entries.length - 1) {
+    // Need to fetch more
+    ui.next.classList.add("disabled");
+    fetching = true;
+    console.log("Fetching creatures");
+    const response = await fetch("https://creaturator.deno.dev/api/v1/50");
+    const creatures = await response.json();
+    history.entries.push(...creatures);
+    ui.next.classList.remove("disabled");
+    fetching = false;
+  }
+
+  // Enable previous button when leaving first entry
+  if (history.index === 0) {
+    ui.previous.classList.remove("disabled");
+  }
+
+  history.index += 1;
+  showCurrentEntry();
+};
+
+// Toggle
+ui.toggle.onpointerup = () => {
+  ui.about.classList.toggle("hidden");
+  ui.content.classList.toggle("hidden");
+};

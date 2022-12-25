@@ -8,30 +8,31 @@
   <title>Legendary Creature Generator</title>
 </head>
 <body>
-  <div id="container">
-    <div>
-      <div id="buttons">
-        <button id="generate">New</button>
-        <button id="share" class="disabled">Share</button>
-      </div>
-      <h2 id="name">Legendary Creature Generator</h2>
-    </div>
-    <div id="description">
-      This is a demonstration page, showing use of the <a href="https://creaturator.deno.dev" target="_blank">Creaturator API</a>.
+  <div id="about" class="hidden">
+    <div id="header" class="text-medium">About</div>
+    <div id="text" class="text-small">
       <p>
-        Tap the "New" button to generate a random name and description of a legendary creature.
-      </p>
-      <p>
-        Tap the "Share" button to share the name and description.
+        This is a demonstration page, showing use of the <a href="https://creaturator.deno.dev" target="_blank">Creaturator API</a>.
       </p>
       <p>
         The names and descriptions are based on <a href="https://en.wikipedia.org/wiki/Lists_of_legendary_creatures" target="_blank">Wikipedia's lists of legendary creatures</a>.
       </p>
       <p>
-        For more information, see the <a href="https://github.com/davidsteinberg/creaturator" target="_blank">project on GitHub</a>.
+        Check out the source on <a href="https://github.com/davidsteinberg/creatures" target="_blank">GitHub</a>.
       </p>
     </div>
   </div>
+  <div id="content">
+    <div id="output">
+      <div id="name" class="text-large">Legendary Creature Generator</div>
+      <div id="description" class="text-medium">Tap next to start</div>
+    </div>
+    <div id="navigation">
+      <div id="previous" class="control text-small disabled">previous</div>
+      <div id="next" class="control text-small">next</div>
+    </div>
+  </div>
+  <div id="toggle" class="text-small">=</div>
   <script type="module" src="index.js"></script>
 </body>
 </html>
