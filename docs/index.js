@@ -17,7 +17,7 @@ const history = {
 };
 
 const showCurrentEntry = () => {
-  const {name, description} = history.entries[history.index];
+  const { name, description } = history.entries[history.index];
   ui.name.textContent = name;
   ui.description.textContent = description;
 };
